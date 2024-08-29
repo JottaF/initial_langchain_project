@@ -11,15 +11,15 @@ api_key = os.getenv("GEMINI_API_KEY")
 
 llm = GoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=api_key)
 
-def generate_name(animal_type):
-  prompt_animal_name = PromptTemplate(
-    input_variables=['animal_type'],
-    template="Me sugira 5 nomes para {animal_type} filhotes."
-  )
+def oscar(film, year):
+  prompt_oscar = PromptTemplate.from_template("Quantos oscars o filme {film} ganhou em {year}?")
 
-  animal_name_chain = LLMChain(llm=llm, prompt=prompt_animal_name)
-  response = animal_name_chain({'animal_type': animal_type})
-  return response['text']
+  oscar_chain = prompt_oscar | llm
+
+  response = oscar_chain.invoke({'film': film, 'year': year})
+
+  return response
 
 if __name__=="__main__":
-  print(generate_name('tanajuras'))
+  response = oscar('Oppenheimer', 2024)
+  print(response)
