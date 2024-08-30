@@ -7,7 +7,7 @@ import sys
 
 load_dotenv()
 
-api_key = os.getenv("GEMINI_API_KEY")
+api_key = os.getenv("GOOGLE_API_KEY")
 
 llm = GoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=api_key)
 
